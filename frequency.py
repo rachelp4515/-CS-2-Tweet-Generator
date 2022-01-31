@@ -1,10 +1,4 @@
-
-# What is the least/most frequent word(s)?
-# How many different words are used?
-# What is the average (mean/median/mode) frequency of words in the text?
-
-
-
+import random
 from distutils.command.clean import clean
 from pprint import pprint
 
@@ -15,7 +9,7 @@ def histogram(source_text):
         split_source = source.split()
         hist = {}
         for word in split_source:
-            clean_word = word.strip("""'",..:-——_‘’“?!();""")
+            clean_word = word.strip("""'",..:-—“?!();""")
             if clean_word in hist:
 
                 hist[clean_word] += 1
@@ -30,6 +24,34 @@ def frequency(word, histogram):
     return histogram[word]
 
 hist = histogram("alice.txt")
-pprint(hist)
-print(unique_words(hist))
-print(frequency("fish", hist))
+# pprint(hist)
+# print(f' Unique Words: {unique_words(hist)}')
+# print(f' Your word appears {frequency("alice", hist)} times.')
+
+def random_word(hist):
+    return random.choice(list(hist.keys()))
+
+# print(random_word(hist))
+
+
+    
+
+def weight(hist):
+    return random.choices(list(hist.keys()), weights=list(hist.values()))[0]
+    # pairs = enumerate(hist) 
+    # keys = [i[0] for i in pairs] 
+    # values = [i[1] for i in pairs]  
+    # return random.choices(keys, values)[0] 
+ 
+pprint(weight(hist))
+
+# test_db = {}
+# for i in range(300):
+#     word = weight(hist)
+#     if word in test_db:
+#         test_db[word] += 1
+#     else:
+#         test_db[word] = 1
+# pprint(test_db)
+
+

@@ -23,7 +23,7 @@ def unique_words(histogram):
 def frequency(word, histogram):
     return histogram[word]
 
-hist = histogram("alice.txt")
+hist = histogram("fish.txt")
 # pprint(hist)
 # print(f' Unique Words: {unique_words(hist)}')
 # print(f' Your word appears {frequency("alice", hist)} times.')
@@ -37,21 +37,32 @@ def random_word(hist):
     
 
 def weight(hist):
-    return random.choices(list(hist.keys()), weights=list(hist.values()))[0]
-    # pairs = enumerate(hist) 
-    # keys = [i[0] for i in pairs] 
-    # values = [i[1] for i in pairs]  
-    # return random.choices(keys, values)[0] 
- 
-pprint(weight(hist))
+    words = list(hist.keys())
+    weights = []
+    total = 0
+    for word in words:
+        weights.append(hist[word] + total)
+        total += hist[word]
+    num = random.randint(1, total)
+    weight_index = 0
+    while num > weights[weight_index]:
+        weight_index += 1
+    return words[weight_index]
+    
 
-# test_db = {}
-# for i in range(300):
-#     word = weight(hist)
-#     if word in test_db:
-#         test_db[word] += 1
-#     else:
-#         test_db[word] = 1
-# pprint(test_db)
+
+
+
+
+pprint(weight(hist)) 
+
+test_db = {}
+for i in range(10000):
+    word = weight(hist)
+    if word in test_db:
+        test_db[word] += 1
+    else:
+        test_db[word] = 1
+pprint(test_db)
 
 
